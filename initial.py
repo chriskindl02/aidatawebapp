@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.write ("Halli")
+st.write ("Halli Test2")
 
 if "df" not in st.session_state:
     st.session_state.df = pd.DataFrame(np.random.randn(20, 2), columns=["x", "y"])
