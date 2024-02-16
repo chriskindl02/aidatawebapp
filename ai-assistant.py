@@ -7,7 +7,7 @@ import pandas as pd
 
 main_data="empty"
 
-st.title("Echo Bot")
+st.title("Assisted Data Analysis Bot")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
