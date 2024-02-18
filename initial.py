@@ -1,13 +1,30 @@
 import streamlit as st
-import pandas as pd
+import openai
+from typing import List
+from streamlit_chat import message
 import numpy as np
+import pandas as pd
 
-st.write ("Halli Test2")
+main_data="empty"
 
-if "df" not in st.session_state:
-    st.session_state.df = pd.DataFrame(np.random.randn(20, 2), columns=["x", "y"])
+st.title("Assisted Data Analysis Bot")
 
-st.header("Choose a datapoint color")
-color = st.color_picker("Color", "#FF0000")
-st.divider()
-st.scatter_chart(st.session_state.df, x="x", y="y", color=color)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+with st.chat_message("user"):
+    st.write("Hallo Nutzer👋")
+    uploaded_file = st.file_uploader("Bitte lade die Datei hoch, die ich für dich analysieren soll:",type=['xlsx','csv'],accept_multiple_files=False)
+    
+    if uploaded_file is not None:
+        xls = pd.ExcelFile(uploaded_file)
+        sheet_names = xls.sheet_names
+        selected_sheet=st.selectbox("Bitte wähle das Tabellenblatt aus, welches ich für dich analysieren soll!", sheet_names)
+        df = pd.read_excel (uploaded_file, sheet_name=selected_sheet)
+        main_data =df
+        st.write (main_data)
+        
+prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
